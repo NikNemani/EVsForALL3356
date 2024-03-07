@@ -11,7 +11,7 @@ export default function Menubar() {
             <nav id = "homenav">
                 <a className = "navlinks" href='/'>Home</a>
                 <a className = "navlinks" href='/FindCars'>Find Cars</a>
-                <a className = "navlinks">Find EV Charging Stations</a>
+                <a className = "navlinks" href='/stations'>Find EV Charging Stations</a>
                 <a className = "navlinks">More Information</a>
             </nav>
         </div>

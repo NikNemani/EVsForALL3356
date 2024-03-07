@@ -15,7 +15,7 @@ export default function Authenticatednavjs() {
         <nav id = "homenav">
             <a className = "navlinks" href='/HomePage'>Home</a>
             <a className = "navlinks" href='/FindCars'>Find Cars</a>
-            <a className = "navlinks"href='/HomePage'>Find EV Charging Stations</a>
+            <a className = "navlinks"href='/stations'>Find EV Charging Stations</a>
             <a className = "navlinks"href='/HomePage'>More Information</a>
         </nav>
         </div>
