@@ -1,5 +1,0 @@
-# Ignore all .cache files
-*.cache
-
-# Ignore cache directory
-cache/
