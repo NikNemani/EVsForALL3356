@@ -14,8 +14,7 @@ export default function Homepage() {
                         Experience the convenience of our car rental platform, meticulously crafted
                         for our car rental business owners. Our online system seamlessly redirects you
                         to the dealership of your choice, making your car rental process effortlessly
-                        efficient. Already an EV owner? That's fine, locate charging stations near you
-                        for quick and easy charging!
+                        efficient. Already an EV owner?
                     </p>
                 </div>
                 <img id = "tesla" src = {Tesla} alt = "The Future of EVs: Tesla"/>

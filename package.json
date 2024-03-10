@@ -1,0 +1,11 @@
+{
+  "name": "evsforall3356",
+  "version": "1.0.0",
+  "description": "Testing",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
