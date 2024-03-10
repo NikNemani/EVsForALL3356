@@ -8,7 +8,7 @@ export default function Homepage() {
             <Menubar />
             <div id = "homeInfo">
                 <div id = "textinfo">
-                    <h2 id = "trustedCar">The Most Trusted Car Service in America</h2>
+                <h2 id="trustedCar">Welcome to EV's For All<br/>Driving Inclusivity in Electric Mobility</h2>
                     <h1 id = "fastSearch">The Fast and Easy Way to <br/>Search for Your Car.</h1>
                     <p id = "parainfo">
                         Experience the convenience of our car rental platform, meticulously crafted
