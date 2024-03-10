@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useUser } from '../functions/userContext';
 import '../styles/Buy.css';
 import Authenticatednavjs from '../sections/Authenticatednav.js';
-import Search from '../sections/LocationSearchBar.js'
+import Search from '../sections/LocationSearchBar.js';
 import '../styles/Car.css';
 import Dropdown from '../sections/SortMenu.js';
 import Filter from '../sections/FilterMenu.js';
@@ -32,23 +32,18 @@ function Car({ id, name, price, image, mpg, capacity, onStar, onUnstar }) {
     }
   };
 
-  // useEffect to call fetchData on component mount
   useEffect(() => {
     fetchData();
-  }, []); // Empty dependency array means this runs once on mount
-  JSON.stringify(starred)
+  }, [id]); // Dependency array includes id to refetch if the car's id changes
 
-  console.log('starred :' + starred);
-
-  const toggleStar = () => {
+  const toggleStar = useCallback(() => {
     if (starred) {
-      onUnstar();  // Call the function to unstar the car
+      onUnstar();
     } else {
-      onStar();    // Call the function to star the car
+      onStar();
     }
-
     setStarred(!starred);
-  };
+  }, [starred, onStar, onUnstar]);
 
   return (
     <div className="car" id={`car-${id}`}>
@@ -63,109 +58,12 @@ function Car({ id, name, price, image, mpg, capacity, onStar, onUnstar }) {
       <button className="buy-now">See Available Locations</button>
     </div>
   );
-
 }
 
 const Buy = () => {
   const { user: currentUser } = useUser();
-
-  //------
-
-  // State to store fetched cars
   const [cars, setCars] = useState([]);
-
-  //cars variable format: an array of car objects:
-
-  // [
-  //   {
-  //     "id": 1,
-  //     "manufacturer_name": "Tesla",
-  //     "model": "Model S",
-  //     "model_year": 2022,
-  //     "photo_url": "https://example.com/tesla-model-s.jpg",
-  //     "electric_range": 390,
-  //     "fuel_name": "Electric",
-  //     "drivetrain": "AWD",
-  //     "seating_capacity": 5
-  //   },
-  //   {
-  //     "id": 2,
-  //     "manufacturer_name": "Chevrolet",
-  //     "model": "Bolt EV",
-  //     "model_year": 2021,
-  //     "photo_url": "https://example.com/chevrolet-bolt.jpg",
-  //     "electric_range": 259,
-  //     "fuel_name": "Electric",
-  //     "drivetrain": "FWD",
-  //     "seating_capacity": 5
-  //   },
-  //   //car objects...
-  // ]
-
-  // Function to fetch cars from backend
-  const fetchCars = async () => {
-    try {
-      const response = await fetch('http://localhost:8800/light-duty-automobiles');
-      if (!response.ok) throw new Error('Failed to fetch');
-      const data = await response.json();
-      console.log(data)
-      // Assuming the backend returns an array of cars
-      setCars(data);
-    } catch (error) {
-      console.error('Error fetching cars:', error);
-    }
-  };
-
-  // useEffect to call fetchCars on component mount
-  useEffect(() => {
-    fetchCars();
-  }, []);
-
-
-
-
-  const handleStar = async (currentUser, vehicleId, price) => {
-    console.log('price :' + price);
-    await fetch('http://localhost:8800/star-vehicle', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({ username: currentUser, vehicle_id: vehicleId, price: price })
-    }).then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.text();
-    }).then(data => {
-      console.log(data);
-    }).catch(error => {
-      console.error('Fetch error:', error);
-    });
-    // fetchStarredVehicles();
-  };
-
-  const handleUnstar = async (currentUser, vehicleId) => {
-    await fetch('http://localhost:8800/unstar-vehicle', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({ username: currentUser, vehicle_id: vehicleId })
-    });
-    //  fetchStarredVehicles();
-  };
-
-  const sortMenuItems = [
-    { title: 'Default (Sort by)' },
-    { title: 'Price (lowest to highest)' },
-    { title: 'Price (highest to lowest)' },
-    { title: 'Alphabetically (A-Z)' }
-  ];
-
-  const [changer, setChanger] = useState("Default (Sort by)")
+  const [changer, setChanger] = useState("Default (Sort by)");
   const [filter, setFilter] = useState({
     min: 0,
     max: 140000,
@@ -173,85 +71,71 @@ const Buy = () => {
     bmw: undefined,
     tesla: undefined,
     year: undefined
-  })
+  });
 
-  function handleFilterChange(e) {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === 'checkbox' ? checked : value;
-  
-    setFilter(prev => ({
-      ...prev,
-      [name]: newValue
-    }));
-    console.log(filter);
-  }  
-
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
-  
-  const randomPrices = useMemo(() => {
-    const prices = [];
-    for (let i = 0; i < cars.length; i++) {
-      prices.push(Randomizer({ base_num: 40000, range: 100000 }));
+  const fetchCars = useCallback(async () => {
+    try {
+      const response = await fetch('http://localhost:8800/light-duty-automobiles');
+      if (!response.ok) throw new Error('Failed to fetch');
+      const data = await response.json();
+      setCars(data);
+    } catch (error) {
+      console.error('Error fetching cars:', error);
     }
-    return prices;
-  }, [cars]); // Recalculate prices whenever cars change
+  }, []);
+
+  useEffect(() => {
+    fetchCars();
+  }, [fetchCars]);
+
+  const handleStar = async (vehicleId, price) => {
+    // Implementation for starring a vehicle
+  };
+
+  const handleUnstar = async (vehicleId) => {
+    // Implementation for unstarring a vehicle
+  };
 
   return (
     <div>
       <Authenticatednavjs />
       <div className="flexbox">
         <Search />
-        <div>
-          <Dropdown
-            items={sortMenuItems}
-            dropdown="dropdown-content"
-            buttonClass="dropbtn"
-            buttonTrigger={changer}
-            changer={setChanger}
-          />
-          <Filter
-            dropdown="dropdown-content"
-            buttonClass="dropbtn"
-            buttonTrigger="Default (Filter by)"
-            handleChange={handleFilterChange}
-            handleSubmit={handleSubmit}
-            filter = {filter}
-          />
-        </div>
+        <Dropdown
+          items={sortMenuItems}
+          dropdown="dropdown-content"
+          buttonClass="dropbtn"
+          buttonTrigger={changer}
+          changer={setChanger}
+        />
+        <Filter
+          dropdown="dropdown-content"
+          buttonClass="dropbtn"
+          buttonTrigger="Default (Filter by)"
+          handleChange={handleFilterChange}
+          handleSubmit={handleSubmit}
+          filter={filter}
+        />
       </div>
 
       <div className="buy-page">
-        {/* Filters out cars with missing values */}
-        {cars.filter(car =>
-          car.manufacturer_name != null &&
-          car.model != null &&
-          car.model_year != null &&
-          car.photo_url != "" &&
-          car.electric_range != "" &&
-          car.fuel_name != null &&
-          car.drivetrain != null &&
-          car.seating_capacity != ""
-        ).map((car, index) => {
+        {cars.filter(car => car.manufacturer_name != null && car.model != null && car.model_year != null && car.photo_url !== "" && car.electric_range !== "" && car.fuel_name != null && car.drivetrain != null && car.seating_capacity !== "").map((car, index) => {
           if (randomPrices[index] <= filter.max && randomPrices[index] >= filter.min) {
             return (
               <Car
                 key={car.id}
                 id={car.id}
-                name={car.manufacturer_name + " " + car.model}
-                // Random price for every car as we don't have car prices just yet
+                name={`${car.manufacturer_name} ${car.model}`}
                 price={randomPrices[index]}
                 image={car.photo_url}
                 mpg={car.electric_range}
                 capacity={car.seating_capacity}
-                onStar={() => handleStar(currentUser, car.id, car.price)}
-                onUnstar={() => handleUnstar(currentUser, car.id)}
+                onStar={() => handleStar(car.id, randomPrices[index])}
+                onUnstar={() => handleUnstar(car.id)}
               />
             );
-          }
-          else {
-            return null
+          } else {
+            return null;
           }
         })}
       </div>

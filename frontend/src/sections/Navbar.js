@@ -8,14 +8,9 @@ const Navbar = () => {
       <img src={logo} className="navbar-logo" alt="EV's FOR ALL Logo" /> 
       <div className="navbar-links">
         <a href="/">Home</a>
-        <a href="/buy">Buy EVs</a>
-        <a href="/rent">Rent EVs</a>
-        <a href="/lease">Lease EVs</a>
+        <a href="/FindCars">Find Cars</a>
         <a href="/stations">Find EV Charging Stations</a>
         <a href="/info">More Information</a>
-      </div>
-      <div className="navbar-buttons">
-        <button onClick={() => {/* Handle log out logic here */}}>Log Out</button>
       </div>
     </nav>
   );

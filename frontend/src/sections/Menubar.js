@@ -10,17 +10,9 @@ export default function Menubar() {
             </Link>
             <nav id = "homenav">
                 <a className = "navlinks" href='/'>Home</a>
-                <a className = "navlinks">Buy EVs</a>
-                <a className = "navlinks">Rent EVs</a>
-                <a className = "navlinks">Lease EVs</a>
-                <a className = "navlinks">Find EV Charging Stations</a>
+                <a className = "navlinks" href='/FindCars'>Find Cars</a>
+                <a className = "navlinks" href='/stations'>Find EV Charging Stations</a>
                 <a className = "navlinks">More Information</a>
-                <div id = "signupDiv">
-                    <NavLink id = "signUpButton" to = "/signup">Sign Up</NavLink>
-                </div>
-                <div id = "loginDiv">
-                    <NavLink id = "loginbutton" to = "/login">Login</NavLink>
-                </div>
             </nav>
         </div>
     )
