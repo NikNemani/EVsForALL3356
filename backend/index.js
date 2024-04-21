@@ -56,15 +56,19 @@ fetchAndStoreAutomobiles();
 // Route to get all light-duty automobiles
 // LIMIT 30 clause limits the number of cars fetched, for testing purposes, limiting to 30 for now
 app.get("/light-duty-automobiles", (req, res) => {
-  db.all("SELECT * FROM light_duty_automobiles LIMIT 30", [], (err, rows) => {
-      if (err) {
-          res.status(500).send("Error retrieving data from the database");
-          console.error(err.message);
-      } else {
-          res.status(200).json(rows);
-      }
-  });
+    const limit = parseInt(req.query.limit) || 30; // Default limit
+    const offset = parseInt(req.query.offset) || 0; // Default offset
+    db.all("SELECT * FROM light_duty_automobiles LIMIT ? OFFSET ?", [limit, offset], (err, rows) => {
+        if (err) {
+            res.status(500).send("Error retrieving data from the database");
+            console.error(err.message);
+        } else {
+            res.status(200).json(rows);
+        }
+    });
 });
+
+
 
 
 // // JWT Secret Key
