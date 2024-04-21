@@ -8,11 +8,15 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
+    "bootstrap": "^5.3.3",
     "connect-sqlite3": "^0.9.13",
     "express-session": "^1.17.3",
+    "mdb-react-ui-kit": "^8.0.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0",
+    "reactstrap": "^9.2.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
